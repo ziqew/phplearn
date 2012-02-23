@@ -397,9 +397,9 @@ function user_pass_ok($user_login,$user_pass) {
 }
 
 function get_currentuserinfo() { // a bit like get_userdata(), on steroids
-	global $HTTP_COOKIE_VARS, $user_login, $userdata, $user_level, $user_ID, $user_nickname, $user_email, $user_url, $user_pass_md5, $cookiehash;
+	global $_COOKIE, $user_login, $userdata, $user_level, $user_ID, $user_nickname, $user_email, $user_url, $user_pass_md5, $cookiehash;
 	// *** retrieving user's data from cookies and db - no spoofing
-	$user_login = $HTTP_COOKIE_VARS['wordpressuser_'.$cookiehash];
+	$user_login = $_COOKIE['wordpressuser_'.$cookiehash];
 	$userdata = get_userdatabylogin($user_login);
 	$user_level = $userdata->user_level;
 	$user_ID = $userdata->ID;
@@ -747,7 +747,7 @@ function gzip_compression() {
 				ob_start("ob_gzhandler");
 			}
 		} else if($phpver > "4.0") {
-			if(strstr($HTTP_SERVER_VARS['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+			if(strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
 				if(extension_loaded("zlib")) {
 					$do_gzip_compress = TRUE;
 					ob_start();
@@ -761,7 +761,7 @@ function gzip_compression() {
 }
 
 function alert_error($msg) { // displays a warning box with an error message (original by KYank)
-	global $$HTTP_SERVER_VARS;
+	global $$_SERVER;
 	?>
 	<html>
 	<head>
@@ -775,7 +775,7 @@ function alert_error($msg) { // displays a warning box with an error message (or
 	<body>
 	<!-- this is for non-JS browsers (actually we should never reach that code, but hey, just in case...) -->
 	<?php echo $msg; ?><br />
-	<a href="<?php echo $HTTP_SERVER_VARS["HTTP_REFERER"]; ?>">go back</a>
+	<a href="<?php echo $_SERVER["HTTP_REFERER"]; ?>">go back</a>
 	</body>
 	</html>
 	<?php
@@ -869,7 +869,7 @@ function pingWeblogsRss($blog_ID = 1, $rss_url) {
 	}
 }
 
-// pings CaféLog.com
+// pings Cafï¿½Log.com
 function pingCafelog($cafelogID,$title='',$p='') {
 	global $use_cafelogping, $blogname, $siteurl, $blogfilename;
 	if ((!(($blogname=="my weblog") && ($siteurl=="http://example.com") && ($blogfilename=="wp.php"))) && (!preg_match("/localhost\//",$siteurl)) && ($use_cafelogping) && ($cafelogID != '')) {
@@ -1487,7 +1487,7 @@ function wp_notify_postauthor($comment_id, $comment_type='comment') {
 	$notify_message .= get_permalink($comment->comment_post_ID) . '#comments';
 
 	if ('' == $comment->comment_author_email || '' == $comment->comment_author) {
-		$from = "From: \"$blogname\" <wordpress@" . $HTTP_SERVER_VARS['SERVER_NAME'] . '>';
+		$from = "From: \"$blogname\" <wordpress@" . $_SERVER['SERVER_NAME'] . '>';
 	} else {
 		$from = 'From: "' . stripslashes($comment->comment_author) . "\" <$comment->comment_author_email>";
 	}
@@ -1555,19 +1555,19 @@ function start_wp() {
 	global $post, $id, $postdata, $authordata, $day, $preview, $page, $pages, $multipage, $more, $numpages;
 	global $preview_userid,$preview_date,$preview_content,$preview_title,$preview_category,$preview_notify,$preview_make_clickable,$preview_autobr;
 	global $pagenow;
-	global $HTTP_GET_VARS;
+	global $_GET;
 	if (!$preview) {
 		$id = $post->ID;
 	} else {
 		$id = 0;
 		$postdata = array (
 			'ID' => 0,
-			'Author_ID' => $HTTP_GET_VARS['preview_userid'],
-			'Date' => $HTTP_GET_VARS['preview_date'],
-			'Content' => $HTTP_GET_VARS['preview_content'],
-			'Excerpt' => $HTTP_GET_VARS['preview_excerpt'],
-			'Title' => $HTTP_GET_VARS['preview_title'],
-			'Category' => $HTTP_GET_VARS['preview_category'],
+			'Author_ID' => $_GET['preview_userid'],
+			'Date' => $_GET['preview_date'],
+			'Content' => $_GET['preview_content'],
+			'Excerpt' => $_GET['preview_excerpt'],
+			'Title' => $_GET['preview_title'],
+			'Category' => $_GET['preview_category'],
 			'Notify' => 1
 			);
 	}

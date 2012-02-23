@@ -297,7 +297,7 @@ function get_archives($type='', $limit='', $format='html', $before = "", $after 
 }
 
 function get_calendar($daylength = 1) {
-	global $wpdb, $HTTP_GET_VARS, $m, $monthnum, $year, $timedifference, $month, $weekday, $tableposts, $posts;
+	global $wpdb, $_GET, $m, $monthnum, $year, $timedifference, $month, $weekday, $tableposts, $posts;
 
     // Quick check. If we have no posts at all, abort!
     if (!$posts) {
@@ -306,8 +306,8 @@ function get_calendar($daylength = 1) {
             return;
     }
 
-	if (isset($HTTP_GET_VARS['w'])) {
-		$w = ''.intval($HTTP_GET_VARS['w']);
+	if (isset($_GET['w'])) {
+		$w = ''.intval($_GET['w']);
 	}
 	$time_difference = get_settings('time_difference');
 
@@ -958,13 +958,13 @@ function the_content_unicode($more_link_text='(more...)', $stripteaser=0, $more_
 
 function get_the_content($more_link_text='(more...)', $stripteaser=0, $more_file='') {
 	global $id, $post, $more, $c, $withcomments, $page, $pages, $multipage, $numpages;
-	global $HTTP_SERVER_VARS, $HTTP_COOKIE_VARS, $preview, $cookiehash;
+	global $_SERVER, $_COOKIE, $preview, $cookiehash;
 	global $querystring_start, $querystring_equal, $querystring_separator;
     global $pagenow;
 	$output = '';
 
 	if (!empty($post->post_password)) { // if there's a password
-		if ($HTTP_COOKIE_VARS['wp-postpass_'.$cookiehash] != $post->post_password) {  // and it doesn't match the cookie
+		if ($_COOKIE['wp-postpass_'.$cookiehash] != $post->post_password) {  // and it doesn't match the cookie
 			$output = get_the_password_form();
 			return $output;
 		}
@@ -973,7 +973,7 @@ function get_the_content($more_link_text='(more...)', $stripteaser=0, $more_file
 	if ($more_file != '') {
 		$file = $more_file;
 	} else {
-		$file = $pagenow; //$HTTP_SERVER_VARS['PHP_SELF'];
+		$file = $pagenow; //$_SERVER['PHP_SELF'];
 	}
 	$content = $pages[$page-1];
 	$content = explode('<!--more-->', $content);
@@ -1053,11 +1053,11 @@ function the_excerpt_unicode() {
 
 function get_the_excerpt($fakeit = false) {
 	global $id, $post;
-	global $HTTP_SERVER_VARS, $HTTP_COOKIE_VARS, $preview, $cookiehash;
+	global $_SERVER, $_COOKIE, $preview, $cookiehash;
 	$output = '';
 	$output = stripslashes($post->post_excerpt);
 	if (!empty($post->post_password)) { // if there's a password
-		if ($HTTP_COOKIE_VARS['wp-postpass_'.$cookiehash] != $post->post_password) {  // and it doesn't match the cookie
+		if ($_COOKIE['wp-postpass_'.$cookiehash] != $post->post_password) {  // and it doesn't match the cookie
 			$output = "There is no excerpt because this is a protected post.";
 			return $output;
 		}
@@ -1221,16 +1221,16 @@ function next_post($format='%', $next='next post: ', $title='yes', $in_same_cat=
 }
 
 function next_posts($max_page = 0) { // original by cfactor at cooltux.org
-	global $HTTP_SERVER_VARS, $siteurl, $blogfilename, $p, $paged, $what_to_show, $pagenow;
+	global $_SERVER, $siteurl, $blogfilename, $p, $paged, $what_to_show, $pagenow;
 	global $querystring_start, $querystring_equal, $querystring_separator;
 	if (empty($p) && ($what_to_show == 'paged')) {
-		$qstr = $HTTP_SERVER_VARS['QUERY_STRING'];
+		$qstr = $_SERVER['QUERY_STRING'];
 		if (!empty($qstr)) {
 			$qstr = preg_replace("/&paged=\d{0,}/","",$qstr);
 			$qstr = preg_replace("/paged=\d{0,}/","",$qstr);
-		} elseif (stristr($HTTP_SERVER_VARS['REQUEST_URI'], $HTTP_SERVER_VARS['SCRIPT_NAME'] )) {
-			if ('' != $qstr = str_replace($HTTP_SERVER_VARS['SCRIPT_NAME'], '',
-											$HTTP_SERVER_VARS['REQUEST_URI']) ) {
+		} elseif (stristr($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME'] )) {
+			if ('' != $qstr = str_replace($_SERVER['SCRIPT_NAME'], '',
+											$_SERVER['REQUEST_URI']) ) {
 				$qstr = preg_replace("/^\//", "", $qstr);
 				$qstr = preg_replace("/paged\/\d{0,}\//", "", $qstr);
 				$qstr = preg_replace("/paged\/\d{0,}/", "", $qstr);
@@ -1274,16 +1274,16 @@ function next_posts_link($label='Next Page &raquo;', $max_page=0) {
 
 
 function previous_posts() { // original by cfactor at cooltux.org
-	global $HTTP_SERVER_VARS, $siteurl, $blogfilename, $p, $paged, $what_to_show, $pagenow;
+	global $_SERVER, $siteurl, $blogfilename, $p, $paged, $what_to_show, $pagenow;
 	global $querystring_start, $querystring_equal, $querystring_separator;
 	if (empty($p) && ($what_to_show == 'paged')) {
-		$qstr = $HTTP_SERVER_VARS['QUERY_STRING'];
+		$qstr = $_SERVER['QUERY_STRING'];
 		if (!empty($qstr)) {
 			$qstr = preg_replace("/&paged=\d{0,}/","",$qstr);
 			$qstr = preg_replace("/paged=\d{0,}/","",$qstr);
-		} elseif (stristr($HTTP_SERVER_VARS['REQUEST_URI'], $HTTP_SERVER_VARS['SCRIPT_NAME'] )) {
-			if ('' != $qstr = str_replace($HTTP_SERVER_VARS['SCRIPT_NAME'], '',
-											$HTTP_SERVER_VARS['REQUEST_URI']) ) {
+		} elseif (stristr($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME'] )) {
+			if ('' != $qstr = str_replace($_SERVER['SCRIPT_NAME'], '',
+											$_SERVER['REQUEST_URI']) ) {
 				$qstr = preg_replace("/^\//", "", $qstr);
 				$qstr = preg_replace("/paged\/\d{0,}\//", "", $qstr);
 				$qstr = preg_replace("/paged\/\d{0,}/", "", $qstr);
@@ -1601,7 +1601,7 @@ function comments_popup_script($width=400, $height=400, $file='wp-comments-popup
 }
 
 function comments_popup_link($zero='No Comments', $one='1 Comment', $more='% Comments', $CSSclass='', $none='Comments Off') {
-	global $id, $wpcommentspopupfile, $wpcommentsjavascript, $post, $wpdb, $tablecomments, $HTTP_COOKIE_VARS, $cookiehash;
+	global $id, $wpcommentspopupfile, $wpcommentsjavascript, $post, $wpdb, $tablecomments, $_COOKIE, $cookiehash;
 	global $querystring_start, $querystring_equal, $querystring_separator, $siteurl;
 	global $comment_count_cache;
 	if ('' == $comment_count_cache["$id"]) {
@@ -1614,7 +1614,7 @@ function comments_popup_link($zero='No Comments', $one='1 Comment', $more='% Com
 		return;
 	} else {
         if (!empty($post->post_password)) { // if there's a password
-            if ($HTTP_COOKIE_VARS['wp-postpass_'.$cookiehash] != $post->post_password) {  // and it doesn't match the cookie
+            if ($_COOKIE['wp-postpass_'.$cookiehash] != $post->post_password) {  // and it doesn't match the cookie
                 echo("Enter your password to view comments");
                 return;
             }
@@ -1836,8 +1836,8 @@ function trackback_url($display = true) {
 
 
 function trackback_rdf($timezone = 0) {
-	global $siteurl, $id, $HTTP_SERVER_VARS;
-	if (!stristr($HTTP_SERVER_VARS['HTTP_USER_AGENT'], 'W3C_Validator')) {
+	global $siteurl, $id, $_SERVER;
+	if (!stristr($_SERVER['HTTP_USER_AGENT'], 'W3C_Validator')) {
 		echo '<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" '."\n";
 		echo '    xmlns:dc="http://purl.org/dc/elements/1.1/"'."\n";
 		echo '    xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">'."\n";
