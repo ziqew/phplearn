@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+ <head>
+  <title>YUI css grid</title>
+  <link rel="stylesheet" type="text/css" href="/javascript/yui_2.8.1/build/base/base.css">
+  <link rel="stylesheet" type="text/css" href="/javascript/yui_2.8.1/build/fonts/fonts.css">
+  <link rel="stylesheet" type="text/css" href="/javascript/yui_2.8.1/build/grids/grids.css">
+  <link type="text/css" rel="stylesheet" href="/javascript/yui_2.8.1/build/layout/assets/layout-core.css">
+
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/yahoo/yahoo-debug.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/dom/dom.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/event/event.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/logger/logger.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/element/element.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/selector/selector.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/layout/layout.js"></script>
+
+<style type="text/css">
+/*margin and padding on body element
+  can introduce errors in determining
+  element position and are not recommended;
+  we turn them off as a foundation for YUI
+  CSS treatments. */
+body {
+	margin:0;
+	padding:0;
+}
+#hd, .yui-layout-unit-top {
+    background-color: blue;
+    color: white;
+}
+#bd, .yui-layout-unit-center {
+    background-color: #f2f2f2;
+}
+#ft, .yui-layout-unit-bottom {
+    background-color: red;
+    color: #fff;
+}
+#nav, .yui-layout-unit-left {
+    background-color: #808080;
+}
+
+</style>
+
+ </head>
+<body class="yui-skin-sam">
+<div id="doc1" class="yui-t1 yui-layout" style="width: 749px; height: 344px; ">
+<div style="height: 344px; width: 749px; " class="yui-layout-doc"><div id="yui-gen0" style="height: 45px; position: absolute; width: 749px; " class="yui-layout-unit yui-layout-unit-top yui-layout-noscroll"><div class="yui-layout-wrap" id="yui-gen1" style="height: 45px; width: 749px; top: 0px; left: 0px; "><div class="yui-layout-bd yui-layout-bd-nohd yui-layout-bd-noft" style="height: 45px; width: 749px; top: 0px; "><div id="hd"><h1>YUI: CSS Grid Builder</h1></div></div></div></div><div id="yui-gen2" style="width: 160px; position: absolute; top: 45px; height: 274px; left: 0px; " class="yui-layout-unit yui-layout-unit-left yui-layout-noscroll"><div class="yui-layout-wrap" id="yui-gen3" style="height: 274px; width: 160px; top: 0px; left: 0px; "><div class="yui-layout-bd yui-layout-bd-nohd yui-layout-bd-noft" id="yui-gen4" style="height: 274px; width: 160px; top: 0px; "><div id="nav">Navigation Pane</div></div></div></div><div id="yui-gen5" style="height: 25px; position: absolute; top: 319px; width: 749px; " class="yui-layout-unit yui-layout-unit-bottom yui-layout-noscroll"><div class="yui-layout-wrap" id="yui-gen6" style="height: 25px; width: 749px; top: 0px; left: 0px; "><div class="yui-layout-bd yui-layout-bd-nohd yui-layout-bd-noft" style="height: 25px; width: 749px; top: 0px; "><div id="ft">Footer is here.</div></div></div></div><div id="yui-gen7" style="position: absolute; height: 274px; width: 589px; top: 45px; left: 160px; " class="yui-layout-unit yui-layout-unit-center yui-layout-noscroll"><div class="yui-layout-wrap" id="yui-gen8" style="height: 274px; width: 589px; top: 0px; left: 0px; "><div class="yui-layout-bd yui-layout-bd-nohd yui-layout-bd-noft" id="yui-gen9" style="height: 274px; width: 589px; top: 0px; "><div id="bd">
+        <div id="yui-main" style="margin-left: 0px; margin-right: 0px; ">
+	        <div>
+                <div class="yui-g">
+                    <div class="yui-u first">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.    </div>
+                    <div class="yui-u">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas sit amet metus. Nunc quam elit, posuere nec, auctor in, rhoncus quis, dui. Aliquam erat volutpat. Ut dignissim, massa sit amet dignissim cursus, quam lacus feugiat.    </div>
+                </div>
+            </div>
+	    </div>
+
+	</div></div></div></div></div></div>
+<script>
+(function() {
+    var Dom = YAHOO.util.Dom,
+        Event = YAHOO.util.Event;
+
+    Event.onDOMReady(function() {
+        var layout = new YAHOO.widget.Layout('doc1', {
+            height: Dom.getClientHeight(), //Height of the viewport
+            width: Dom.get('doc1').offsetWidth, //Width of the outer element
+            minHeight: 150, //So it doesn't get too small
+            units: [
+                { position: 'top', height: 45, body: 'hd' },
+                { position: 'left', width: 160, body: 'nav', grids: true },
+                { position: 'bottom', height: 25, body: 'ft' },
+                { position: 'center', body: 'bd', grids: true }
+            ]
+        });
+        layout.on('beforeResize', function() {
+            Dom.setStyle('doc1', 'height', Dom.getClientHeight() + 'px');
+        });
+
+        layout.render();
+
+        //Handle the resizing of the window
+        Event.on(window, 'resize', layout.resize, layout, true);
+    });
+})();
+</script>
+ </body>
+ </html>

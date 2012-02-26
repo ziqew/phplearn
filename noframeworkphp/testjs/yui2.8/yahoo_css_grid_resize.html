@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+        "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="en">
+ <head>
+  <title>YUI css grid</title>
+  <link rel="stylesheet" type="text/css" href="/javascript/yui_2.8.1/build/base/base.css">
+  <link rel="stylesheet" type="text/css" href="/javascript/yui_2.8.1/build/fonts/fonts.css">
+  <link rel="stylesheet" type="text/css" href="/javascript/yui_2.8.1/build/grids/grids.css">
+  <link type="text/css" rel="stylesheet" href="/javascript/yui_2.8.1/build/resize/assets/skins/sam/resize.css">
+
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/yahoo/yahoo-debug.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/dom/dom.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/event/event.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/logger/logger.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/animation/animation.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/element/element.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/dragdrop/dragdrop.js"></script>
+  <script type="text/javascript" src="/javascript/yui_2.8.1/build/resize/resize.js"></script>
+<style>
+#pg p {
+     margin: 1em;
+}
+#pg {
+    width: 600px;
+    height: 200px;
+}
+#pg .yui-g {
+    height: 200px;
+    width: 600px;
+    overflow: hidden;
+}
+#pg .yui-g .first {
+    background-color: yellow;
+}
+#pg .yui-u {
+    height: 100%;
+    background-color: orange;
+    overflow: hidden;
+}
+
+</style>
+ </head>
+<body class="yui-skin-sam">
+<!-- #doc = 750px; #doc2 = 950px; #doc3 = 100%; #doc4 = 974px -->
+<!-- .yui-t1 = left 160px; .yui-t2 = left 180px; .yui-t3 = left 300px; -->
+<!-- .yui-t4 = right 180px; .yui-t5 = right 240px; .yui-t6 = right 300px; -->
+<div id="pg">
+    <div class="yui-g">
+        <div class="yui-u first yui-resize" id="sizeIt" style="width: 200px; ">
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse justo nibh, pharetra at, adipiscing ullamcorper, rutrum ac, enim. Nullam pretium interdum metus. Ut in neque. Vivamus ut lorem vitae turpis porttitor tempor. Nam consectetuer est quis lacus. Mauris ut diam nec diam tincidunt eleifend. Vivamus magna. Praesent commodo egestas metus. Praesent condimentum bibendum metus. Sed sem sem, molestie et, venenatis eget, suscipit quis, dui. Morbi molestie, ipsum nec posuere lobortis, massa diam aliquet pede, tempor ultricies neque tortor sit amet nisi. Suspendisse vel quam in nisl dictum condimentum. Maecenas volutpat leo vitae leo. Nullam elit arcu, ullamcorper commodo, elementum nec, dictum nec, augue. Maecenas at tellus vitae ante fermentum elementum. Ut auctor ante et nisi. Suspendisse sagittis tristique eros.</p>
+        <div id="yui-gen0" class="yui-resize-handle yui-resize-handle-r"><div class="yui-resize-handle-inner-r"></div></div></div>
+        <div class="yui-u" id="sizeIt2" style="width: 394px; ">
+            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Suspendisse justo nibh, pharetra at, adipiscing ullamcorper, rutrum ac, enim. Nullam pretium interdum metus. Ut in neque. Vivamus ut lorem vitae turpis porttitor tempor. Nam consectetuer est quis lacus. Mauris ut diam nec diam tincidunt eleifend. Vivamus magna. Praesent commodo egestas metus. Praesent condimentum bibendum metus. Sed sem sem, molestie et, venenatis eget, suscipit quis, dui. Morbi molestie, ipsum nec posuere lobortis, massa diam aliquet pede, tempor ultricies neque tortor sit amet nisi. Suspendisse vel quam in nisl dictum condimentum. Maecenas volutpat leo vitae leo. Nullam elit arcu, ullamcorper commodo, elementum nec, dictum nec, augue. Maecenas at tellus vitae ante fermentum elementum. Ut auctor ante et nisi. Suspendisse sagittis tristique eros.</p>
+        </div>
+    </div>
+</div>
+<script>
+(function() {
+    var Dom = YAHOO.util.Dom,
+        Event = YAHOO.util.Event,
+        col1 = null
+        col2 = null;
+
+    Event.onDOMReady(function() {
+        var size = parseInt(Dom.getStyle('pg', 'width'), 10);
+        col1 = Dom.get('sizeIt');
+        col2 = Dom.get('sizeIt2');
+        var max = (size - 150);
+        var resize = new YAHOO.util.Resize('sizeIt', {
+            handles: ['r'],
+            minWidth: 150,
+            maxWidth: max
+        });
+        resize.on('resize', function(ev) {
+            var w = ev.width;
+            Dom.setStyle(col1, 'height', '');
+            Dom.setStyle(col2, 'width', (size - w - 6) + 'px');
+        });
+
+        resize.resize(null, 200, 200, 0, 0, true);
+    });
+
+})();
+</script>
+ </body>
+ </html>
